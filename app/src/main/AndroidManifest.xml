@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.vvb2060.puellamagi">
+
+    <queries>
+        <package android:name="com.topjohnwu.magisk" />
+    </queries>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:fullBackupOnly="true"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:label="Magica"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault.DayNight"
+        android:zygotePreloadName="io.github.vvb2060.puellamagi.AppZygote">
+        <service
+            android:name=".MagicaService"
+            android:isolatedProcess="true"
+            android:useAppZygote="true" />
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

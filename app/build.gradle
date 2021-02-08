@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
+    ndkVersion '21.3.6528147'
+    defaultConfig {
+        applicationId 'io.github.vvb2060.puellamagi'
+        minSdkVersion 29
+        targetSdkVersion 30
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.debug
+            proguardFiles 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        ndkBuild.path 'src/main/jni/Android.mk'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    packagingOptions {
+        exclude '/META-INF/**'
+        exclude '/*.properties'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    dependenciesInfo {
+        includeInApk false
+    }
+}
