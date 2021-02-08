@@ -35,7 +35,7 @@ public final class MainActivity extends Activity {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-            console.add("服务已连接");
+            console.add(getString(R.string.service_connected));
             App.server = IRemoteService.Stub.asInterface(binder);
             Shell.enableVerboseLogging = BuildConfig.DEBUG;
             shell = Shell.Builder.create().setFlags(Shell.FLAG_NON_ROOT_SHELL).build();
@@ -45,7 +45,7 @@ public final class MainActivity extends Activity {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             App.server = null;
-            console.add("服务连接断开");
+            console.add(getString(R.string.service_disconnected));
         }
     };
 
@@ -66,26 +66,26 @@ public final class MainActivity extends Activity {
 
     void cmd(String... cmds) {
         shell.newJob().add(cmds).to(console).submit(out -> {
-            if (!out.isSuccess()) console.add(Arrays.toString(cmds) + " 执行失败");
+            if (!out.isSuccess()) console.add(Arrays.toString(cmds) + getString(R.string.exec_failed));
         });
     }
 
     void check() {
         cmd("id");
         if (shell.isRoot()) {
-            console.add("已打开 Root Shell");
+            console.add(getString(R.string.root_shell_opened));
         } else {
-            console.add("无法打开 Root Shell");
+            console.add(getString(R.string.cannot_open_root_shell));
             return;
         }
 
         var cmd = "ps -A 2>/dev/null | grep magiskd | grep -qv grep";
         var magiskd = ShellUtils.fastCmdResult(shell, cmd);
         if (magiskd) {
-            console.add("magiskd 正在运行，点按下方按钮杀死magiskd，丢失Root权限，重启设备恢复");
+            console.add(getString(R.string.magiskd_running));
             killMagiskd();
         } else {
-            console.add("magiskd 未运行，准备刷入Magisk");
+            console.add(getString(R.string.magiskd_not_running));
             installMagisk();
         }
     }
@@ -95,8 +95,8 @@ public final class MainActivity extends Activity {
     void killMagiskd() {
         binding.install.setOnClickListener(v -> {
             var cmd = "kill -9 $(pidof magiskd)";
-            if (ShellUtils.fastCmdResult(shell, cmd)) console.add("已杀死 magiskd");
-            else console.add("杀死 magiskd 失败");
+            if (ShellUtils.fastCmdResult(shell, cmd)) console.add(getString(R.string.magiskd_killed));
+            else console.add(getString(R.string.magiskd_failed_to_kill));
             binding.install.setEnabled(false);
         });
         binding.install.setText("Kill magiskd");
@@ -109,8 +109,8 @@ public final class MainActivity extends Activity {
         try {
             info = getPackageManager().getApplicationInfo("com.topjohnwu.magisk", 0);
         } catch (PackageManager.NameNotFoundException e) {
-            console.add("没有安装完整版Magisk软件包(com.topjohnwu.magisk)");
-            console.add("需要安装最新(Canary) Magisk应用");
+            console.add(getString(R.string.magisk_package_not_installed));
+            console.add(getString(R.string.requires_latest_magisk_app));
             return;
         }
 
@@ -122,28 +122,28 @@ public final class MainActivity extends Activity {
             var apk = new ZipFile(info.publicSourceDir);
             var update = apk.getEntry("META-INF/com/google/android/update-binary");
             if (update != null) {
-                console.add("点按下方按钮刷入Magisk");
+                console.add(getString(R.string.tap_to_install_magisk));
                 binding.install.setOnClickListener(v -> {
                     shell.newJob().add(cmd).to(console).submit(out -> {
                         if (out.isSuccess()) {
-                            console.add("完成，点按下方按钮重启");
+                            console.add(getString(R.string.tap_to_reboot));
                             binding.install.setOnClickListener(a -> cmd("reboot"));
                             binding.install.setText("Reboot");
                             binding.install.setEnabled(true);
                         } else {
-                            console.add("刷入失败");
+                            console.add(getString(R.string.failed_to_install));
                         }
                     });
                     binding.install.setEnabled(false);
                 });
-                binding.install.setText("Flash Magisk");
+                binding.install.setText("Install Magisk");
                 binding.install.setVisibility(View.VISIBLE);
             } else {
-                console.add("需要安装最新(Canary) Magisk应用");
+                console.add(getString(R.string.requires_latest_magisk_app));
             }
         } catch (IOException e) {
             Log.e(TAG, "installMagisk", e);
-            console.add("无法解压Magisk安装包");
+            console.add(getString(R.string.cannot_extra_magisk));
         }
     }
 
@@ -151,7 +151,7 @@ public final class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        console.add("启动服务：" + bind());
+        console.add(getString(R.string.start_service, Boolean.toString(bind())));
     }
 
     @Override

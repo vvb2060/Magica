@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_connected">服务已连接</string>
+    <string name="service_disconnected">服务连接断开</string>
+    <string name="exec_failed">执行 %s 失败</string>
+    <string name="root_shell_opened">已打开 Root Shell</string>
+    <string name="cannot_open_root_shell">无法打开 Root Shell</string>
+    <string name="magiskd_running">magiskd 正在运行，点按下方按钮杀死 magiskd，丢失 Root 权限，重启设备恢复</string>
+    <string name="magiskd_not_running">magiskd 未运行，准备刷入 Magisk。</string>
+    <string name="magiskd_killed">已杀死 magiskd</string>
+    <string name="magiskd_failed_to_kill">杀死 magiskd 失败</string>
+    <string name="magisk_package_not_installed">没有安装完整版 Magisk 软件包 (com.topjohnwu.magisk)</string>
+    <string name="tap_to_install_magisk">点按下方按钮刷入 Magisk</string>
+    <string name="tap_to_reboot">完成，点按下方按钮重启</string>
+    <string name="failed_to_install">刷入失败</string>
+    <string name="requires_latest_magisk_app">需要安装最新 (Canary) Magisk 应用</string>
+    <string name="cannot_extra_magisk">无法解压 Magisk 安装包</string>
+    <string name="start_service">启动服务：%s</string>
+
+</resources>

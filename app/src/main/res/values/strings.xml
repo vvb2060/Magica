@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_connected">Service connected</string>
+    <string name="service_disconnected">Service disconnected</string>
+    <string name="exec_failed">Execute %s failed</string>
+    <string name="root_shell_opened">Root Shell opened</string>
+    <string name="cannot_open_root_shell">Cannot open Root Shell</string>
+    <string name="magiskd_running">magiskd is running, tap the button below to kill magiskd. The Root permission will be lost, reboot the device to restore.</string>
+    <string name="magiskd_not_running">magiskd is not running, ready to install Magisk.</string>
+    <string name="magiskd_killed">Killed magiskd</string>
+    <string name="magiskd_failed_to_kill">Failed to kill magisk</string>
+    <string name="magisk_package_not_installed">Full version of Magisk (com.topjohnwu.magisk) is not installed</string>
+    <string name="tap_to_install_magisk">Tap the button below to install Magisk</string>
+    <string name="tap_to_reboot">Finished, tap the button below to reboot</string>
+    <string name="failed_to_install">Failed to install</string>
+    <string name="requires_latest_magisk_app">Requires the latest (Canary) version of Magisk</string>
+    <string name="cannot_extra_magisk">Cannot extra Magisk</string>
+    <string name="start_service">Start service: %s</string>
+</resources>
