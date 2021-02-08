@@ -75,7 +75,7 @@ public final class MainActivity extends Activity {
         if (shell.isRoot()) {
             console.add("已打开 Root Shell");
         } else {
-            console.add("此设备是安全的，无法打开 Root Shell");
+            console.add("无法打开 Root Shell");
             return;
         }
 
