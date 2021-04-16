@@ -16,9 +16,10 @@
 
 package com.topjohnwu.superuser.internal;
 
+import static io.github.vvb2060.puellamagi.App.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RestrictTo;
@@ -39,31 +40,21 @@ public final class Utils {
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
-    public static final Charset UTF_8 =
-            Build.VERSION.SDK_INT >= 19 ? StandardCharsets.UTF_8 : Charset.forName("UTF-8");
+    public static final Charset UTF_8 = StandardCharsets.UTF_8;
     private static Class<?> synchronizedCollectionClass;
-    private static final String TAG = "LIBSU";
-
-    public static void log(Object log) {
-        log(TAG, log);
-    }
 
     public static void log(String tag, Object log) {
         if (vLog())
-            Log.d(tag, log.toString());
+            Log.d(TAG, tag + ": " + log.toString());
     }
 
     public static void ex(Throwable t) {
         if (vLog())
-            Log.d(TAG, "", t);
+            Log.w(TAG, "LIBSU: ", t);
     }
 
     public static void err(Throwable t) {
-        err(TAG, t);
-    }
-
-    public static void err(String tag, Throwable t) {
-        Log.d(tag, "", t);
+        Log.e(TAG, "LIBSU: ", t);
     }
 
     public static boolean vLog() {
@@ -85,10 +76,6 @@ public final class Utils {
             });
         }
         return context;
-    }
-
-    public static Context getDeContext(Context context) {
-        return Build.VERSION.SDK_INT >= 24 ? context.createDeviceProtectedStorageContext() : context;
     }
 
     public static boolean isSynchronized(Collection<?> collection) {
