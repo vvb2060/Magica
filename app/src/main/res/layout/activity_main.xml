@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 tools:text="@tools:sample/lorem/random" />
         </HorizontalScrollView>
     </ScrollView>
