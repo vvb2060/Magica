@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
-    ndkVersion '22.1.7171670'
+    compileSdkVersion 32
+    buildToolsVersion '32.0.0'
+    ndkVersion '23.1.7779620'
     defaultConfig {
         applicationId 'io.github.vvb2060.puellamagi'
         minSdkVersion 29
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName '1.0'
     }
@@ -32,8 +32,9 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     packagingOptions {
-        exclude '/META-INF/**'
-        exclude '/*.properties'
+        resources {
+            excludes += '**'
+        }
     }
     lintOptions {
         checkReleaseBuilds false
