@@ -107,7 +107,7 @@ class ShellImpl extends Shell {
 
         Utils.log(TAG, "exec " + TextUtils.join(" ", cmd));
         try {
-            proc = App.server.exec(cmd, null, null);
+            proc = App.server.getRemoteProcess();
         } catch (RemoteException | NullPointerException e) {
             Log.e(App.TAG, "Remote server died", e);
         }

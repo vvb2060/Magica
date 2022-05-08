@@ -1,5 +1,7 @@
 package io.github.vvb2060.puellamagi;
 
+import static io.github.vvb2060.puellamagi.App.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -10,6 +12,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
@@ -21,11 +24,10 @@ import com.topjohnwu.superuser.ShellUtils;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.ZipFile;
 
 import io.github.vvb2060.puellamagi.databinding.ActivityMainBinding;
-
-import static io.github.vvb2060.puellamagi.App.TAG;
 
 public final class MainActivity extends Activity {
     private Shell shell;
@@ -40,6 +42,7 @@ public final class MainActivity extends Activity {
             Shell.enableVerboseLogging = BuildConfig.DEBUG;
             shell = Shell.Builder.create().setFlags(Shell.FLAG_NON_ROOT_SHELL).build();
             check();
+            getRunningAppProcesses();
         }
 
         @Override
@@ -64,9 +67,26 @@ public final class MainActivity extends Activity {
         }
     }
 
+    void getRunningAppProcesses() {
+        try {
+            var processes = App.server.getRunningAppProcesses();
+            console.add("uid pid processName pkgList importance");
+            for (var process : processes) {
+                var str = String.format(Locale.ROOT, "%d %d %s %s %d",
+                        process.uid, process.pid, process.processName,
+                        Arrays.toString(process.pkgList), process.importance);
+                console.add(str);
+            }
+        } catch (RemoteException | SecurityException e) {
+            console.add(Log.getStackTraceString(e));
+        }
+    }
+
     void cmd(String... cmds) {
         shell.newJob().add(cmds).to(console).submit(out -> {
-            if (!out.isSuccess()) console.add(Arrays.toString(cmds) + getString(R.string.exec_failed));
+            if (!out.isSuccess()) {
+                console.add(Arrays.toString(cmds) + getString(R.string.exec_failed));
+            }
         });
     }
 
@@ -95,8 +115,11 @@ public final class MainActivity extends Activity {
     void killMagiskd() {
         binding.install.setOnClickListener(v -> {
             var cmd = "kill -9 $(pidof magiskd)";
-            if (ShellUtils.fastCmdResult(shell, cmd)) console.add(getString(R.string.magiskd_killed));
-            else console.add(getString(R.string.magiskd_failed_to_kill));
+            if (ShellUtils.fastCmdResult(shell, cmd)) {
+                console.add(getString(R.string.magiskd_killed));
+            } else {
+                console.add(getString(R.string.magiskd_failed_to_kill));
+            }
             binding.install.setEnabled(false);
         });
         binding.install.setText("Kill magiskd");
