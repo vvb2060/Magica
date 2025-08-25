@@ -1,6 +1,7 @@
 # Magica
 
 Privilege Escalation PoC when seccomp is disabled for Android 10+.
+Confirmed to work for up to Android 16.
 
 ![Android CI](https://github.com/vvb2060/Magica/workflows/Android%20CI/badge.svg?branch=master)
 
