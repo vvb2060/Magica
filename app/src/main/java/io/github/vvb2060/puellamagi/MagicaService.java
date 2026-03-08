@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import io.github.vvb2060.magica.lib.MagicaRoot;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -26,11 +28,9 @@ public final class MagicaService extends Service {
         }
     };
 
-    native static void root();
-
     public IBinder onBind(Intent intent) {
         try {
-            root();
+            MagicaRoot.root();
             process = Runtime.getRuntime().exec("sh");
             return binder;
         } catch (IOException e) {

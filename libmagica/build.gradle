@@ -1,0 +1,26 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    ndkVersion '23.1.7779620'
+    namespace 'io.github.vvb2060.magica.lib'
+    defaultConfig {
+        minSdkVersion 29
+        compileSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    externalNativeBuild {
+        ndkBuild.path 'src/main/jni/Android.mk'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}

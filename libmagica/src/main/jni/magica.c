@@ -89,7 +89,7 @@ jint JNI_OnLoad(JavaVM *jvm, void *v __unused) {
         return JNI_ERR;
     }
 
-    if ((clazz = (*env)->FindClass(env, "io/github/vvb2060/puellamagi/MagicaService")) == NULL) {
+    if ((clazz = (*env)->FindClass(env, "io/github/vvb2060/magica/lib/MagicaRoot")) == NULL) {
         return JNI_ERR;
     }
 
@@ -105,3 +105,4 @@ jint JNI_OnLoad(JavaVM *jvm, void *v __unused) {
 
     return JNI_VERSION_1_6;
 }
+

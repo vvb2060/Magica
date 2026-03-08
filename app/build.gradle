@@ -20,9 +20,6 @@ android {
             proguardFiles 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
-        ndkBuild.path 'src/main/jni/Android.mk'
-    }
     buildFeatures {
         viewBinding true
         aidl true
@@ -44,4 +41,8 @@ android {
         checkReleaseBuilds false
     }
     enableKotlin = false
+}
+
+dependencies {
+    implementation project(':libmagica')
 }

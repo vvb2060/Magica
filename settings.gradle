@@ -6,6 +6,7 @@ pluginManagement {
     }
     plugins {
         id 'com.android.application' version '9.1.0'
+        id 'com.android.library' version '9.1.0'
     }
 }
 plugins {
@@ -19,3 +20,4 @@ dependencyResolutionManagement {
     }
 }
 include ':app'
+include ':libmagica'
