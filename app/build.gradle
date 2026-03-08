@@ -8,7 +8,6 @@ android {
         applicationId 'io.github.vvb2060.puellamagi'
         minSdkVersion 29
         compileSdk 35
-        targetSdkVersion 35
         versionCode 3
         versionName '1.2'
     }
@@ -44,4 +43,5 @@ android {
     lint {
         checkReleaseBuilds false
     }
+    enableKotlin = false
 }

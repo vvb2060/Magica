@@ -99,15 +99,15 @@ public final class MainActivity extends Activity {
             return;
         }
 
-        var cmd = "ps -A 2>/dev/null | grep magiskd | grep -qv grep";
-        var magiskd = ShellUtils.fastCmdResult(shell, cmd);
-        if (magiskd) {
-            console.add(getString(R.string.magiskd_running));
-            killMagiskd();
-        } else {
-            console.add(getString(R.string.magiskd_not_running));
+//        var cmd = "ps -A 2>/dev/null | grep magiskd | grep -qv grep";
+//        var magiskd = ShellUtils.fastCmdResult(shell, cmd);
+//        if (magiskd) {
+//            console.add(getString(R.string.magiskd_running));
+//            killMagiskd();
+//        } else {
+//            console.add(getString(R.string.magiskd_not_running));
             installMagisk();
-        }
+//        }
     }
 
 
