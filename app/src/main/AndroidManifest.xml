@@ -24,9 +24,6 @@
             android:exported="true"
             android:isolatedProcess="true"
             android:useAppZygote="true">
-            <intent-filter>
-                <action android:name="io.github.vvb2060.puellamagi.action.EXEC_WHITELIST" />
-            </intent-filter>
         </service>
 
         <receiver
@@ -46,7 +43,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="io.github.vvb2060.puellamagi.action.QUERY_WHITELIST" />
+                <action android:name="io.github.vvb2060.puellamagi.action.EXEC" />
             </intent-filter>
         </receiver>
 

@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 public final class MagicaService extends Service {
-    public static final String ACTION_EXEC_WHITELIST = "io.github.vvb2060.puellamagi.action.EXEC_WHITELIST";
-    public static final String EXTRA_COMMAND = "command";
-
     private final Object lock = new Object();
     private Process process;
     private final IRemoteService.Stub binder = new IRemoteService.Stub() {
@@ -49,22 +46,6 @@ public final class MagicaService extends Service {
             MagicaRoot.root();
             process = Runtime.getRuntime().exec("sh");
         }
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-            ensureRootShell();
-            if (intent != null && ACTION_EXEC_WHITELIST.equals(intent.getAction())) {
-                var result = CommandExecutor.execute(intent.getStringExtra(EXTRA_COMMAND));
-                Log.i(TAG, "exec: " + result);
-            }
-        } catch (IllegalArgumentException e) {
-            Log.w(TAG, "Rejected non-whitelisted command", e);
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to initialize root shell in onStartCommand", e);
-        }
-        return START_STICKY;
     }
 
     @Override
