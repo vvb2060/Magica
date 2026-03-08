@@ -29,7 +29,7 @@ public final class MagicaService extends Service {
         }
 
         @Override
-        public String execWhitelistedCommand(String command) {
+        public String execCommand(String command) {
             try {
                 return CommandExecutor.execute(command);
             } catch (IllegalArgumentException | IOException e) {

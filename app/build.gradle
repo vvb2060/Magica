@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    ndkVersion '23.1.7779620'
+    ndkVersion '28.2.13676358'
     defaultConfig {
         applicationId 'io.github.vvb2060.puellamagi'
         minSdkVersion 29

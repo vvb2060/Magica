@@ -1,10 +1,10 @@
 #include <jni.h>
-#include <string.h>
-#include <errno.h>
+#include <cstring>
+#include <cerrno>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/capability.h>
-#include <xhook.h>
+#include <lsplt.hpp>
 #include "logging.h"
 #include "android_filesystem_config.h"
 
@@ -13,13 +13,13 @@
 static void print_cap() {
     ssize_t length;
     cap_t cap_d = cap_get_proc();
-    if (cap_d == NULL) {
+    if (cap_d == nullptr) {
         LOGE("Failed to get cap: %s", strerror(errno));
     } else {
         char *result = cap_to_text(cap_d, &length);
         LOGI("Capabilities: %s\n", result);
         cap_free(result);
-        result = NULL;
+        result = nullptr;
         cap_free(cap_d);
     }
 }
@@ -85,24 +85,45 @@ jint JNI_OnLoad(JavaVM *jvm, void *v __unused) {
     JNIEnv *env;
     jclass clazz;
 
-    if ((*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6) != JNI_OK) {
+    if (jvm->GetEnv((void **) &env, JNI_VERSION_1_6) != JNI_OK) {
         return JNI_ERR;
     }
 
-    if ((clazz = (*env)->FindClass(env, "io/github/vvb2060/magica/lib/MagicaRoot")) == NULL) {
+    if ((clazz = env->FindClass("io/github/vvb2060/magica/lib/MagicaRoot")) == nullptr) {
         return JNI_ERR;
     }
 
-    JNINativeMethod methods[] = {{"root", "()V", root}};
-    if ((*env)->RegisterNatives(env, clazz, methods, 1) < 0) {
+    JNINativeMethod methods[] = {{"root", "()V", (void*)root}};
+    if (env->RegisterNatives(clazz, methods, 1) < 0) {
         return JNI_ERR;
     }
 
     signal(SIGSYS, signal_handler);
+    print_cap();
 
-    xhook_register(".*\\libandroid_runtime.so$", "capset", skip_capset, NULL);
-    if (xhook_refresh(0)) PLOGE("xhook");
+    auto maps = lsplt::MapInfo::Scan();
+    bool hook_registered = false;
+    for (const auto &map : maps) {
+        if (map.path.find("libandroid_runtime.so") != std::string::npos) {
+            LOGI("Found libandroid_runtime.so: dev=%lu, inode=%lu, path=%s",
+                 (unsigned long)map.dev, (unsigned long)map.inode, map.path.c_str());
+            if (lsplt::RegisterHook(map.dev, map.inode, "capset", (void*)skip_capset, nullptr)) {
+                hook_registered = true;
+                LOGI("Hook registered successfully");
+                break;
+            } else {
+                LOGE("Failed to register hook for capset");
+            }
+        }
+    }
+
+    if (hook_registered) {
+        if (!lsplt::CommitHook()) {
+            PLOGE("lsplt CommitHook failed");
+        }
+    } else {
+        LOGE("libandroid_runtime.so not found or hook registration failed");
+    }
 
     return JNI_VERSION_1_6;
 }
-

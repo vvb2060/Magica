@@ -21,6 +21,14 @@ adb shell start
 ```sh
 adb shell am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd id
 adb shell am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd whoami
+adb shell 'am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd "su -v"'
+```
+
+For commands with parameters, enclose them in quotation marks or run them directly in the adb shell.
+
+```sh
+adb shell
+am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd "su -v"
 ```
 
 The command result is returned in `Broadcast completed` output `data=`.

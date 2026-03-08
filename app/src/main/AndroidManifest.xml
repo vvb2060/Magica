@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <queries>
         <package android:name="com.topjohnwu.magisk" />
@@ -24,6 +26,13 @@
             android:exported="true"
             android:isolatedProcess="true"
             android:useAppZygote="true">
+        </service>
+
+        <service
+            android:name=".CommandService"
+            android:directBootAware="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
         </service>
 
         <receiver

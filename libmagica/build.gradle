@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    ndkVersion '23.1.7779620'
+    ndkVersion '28.2.13676358'
     namespace 'io.github.vvb2060.magica.lib'
     defaultConfig {
         minSdkVersion 29
@@ -17,7 +17,10 @@ android {
         }
     }
     externalNativeBuild {
-        ndkBuild.path 'src/main/jni/Android.mk'
+        cmake {
+            path 'src/main/jni/CMakeLists.txt'
+            version '3.28.0+'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

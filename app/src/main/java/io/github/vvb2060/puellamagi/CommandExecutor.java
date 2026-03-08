@@ -5,7 +5,6 @@ import io.github.vvb2060.magica.lib.MagicaRoot;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Locale;
 
 final class CommandExecutor {
 
@@ -16,7 +15,7 @@ final class CommandExecutor {
         if (command == null) {
             return "";
         }
-        return command.trim().toLowerCase(Locale.ROOT);
+        return command.trim();
     }
 
     static String execute(String command) throws IOException {

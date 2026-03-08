@@ -1,0 +1,3 @@
+[submodule "libmagica/src/main/jni/external/lsplt"]
+	path = libmagica/src/main/jni/external/lsplt
+	url = https://github.com/LSPosed/LSPlt.git
