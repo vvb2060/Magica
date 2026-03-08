@@ -195,6 +195,7 @@ public final class MainActivity extends Activity {
     class AppendCallbackList extends CallbackList<String> {
         @Override
         public void onAddElement(String s) {
+            Log.d(TAG, s);
             binding.console.append(s);
             binding.console.append("\n");
             binding.sv.postDelayed(() -> binding.sv.fullScroll(ScrollView.FOCUS_DOWN), 10);
