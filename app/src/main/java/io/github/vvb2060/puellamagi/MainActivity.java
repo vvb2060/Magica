@@ -30,6 +30,7 @@ import java.util.zip.ZipFile;
 import io.github.vvb2060.puellamagi.databinding.ActivityMainBinding;
 
 public final class MainActivity extends Activity {
+    private boolean bound;
     private Shell shell;
     private ActivityMainBinding binding;
     private final List<String> console = new AppendCallbackList();
@@ -54,15 +55,17 @@ public final class MainActivity extends Activity {
 
     private boolean bind() {
         try {
-            return bindIsolatedService(
+            bound = bindIsolatedService(
                     new Intent(this, MagicaService.class),
                     Context.BIND_AUTO_CREATE,
                     "magica",
                     getMainExecutor(),
                     connection
             );
+            return bound;
         } catch (Exception e) {
             Log.e(TAG, "Can not bind service", e);
+            bound = false;
             return false;
         }
     }
@@ -183,7 +186,10 @@ public final class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(connection);
+        if (bound) {
+            unbindService(connection);
+            bound = false;
+        }
     }
 
     class AppendCallbackList extends CallbackList<String> {

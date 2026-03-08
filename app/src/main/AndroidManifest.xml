@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <queries>
         <package android:name="com.topjohnwu.magisk" />
         <package android:name="io.github.vvb2060.magisk" />
@@ -9,6 +11,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:directBootAware="true"
         android:fullBackupOnly="true"
         android:icon="@android:drawable/sym_def_app_icon"
         android:label="Magica"
@@ -17,8 +20,35 @@
         android:zygotePreloadName="io.github.vvb2060.puellamagi.AppZygote">
         <service
             android:name=".MagicaService"
+            android:directBootAware="true"
+            android:exported="true"
             android:isolatedProcess="true"
-            android:useAppZygote="true" />
+            android:useAppZygote="true">
+            <intent-filter>
+                <action android:name="io.github.vvb2060.puellamagi.action.EXEC_WHITELIST" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".CommandReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.github.vvb2060.puellamagi.action.QUERY_WHITELIST" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".MainActivity"

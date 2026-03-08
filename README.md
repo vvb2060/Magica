@@ -16,6 +16,15 @@ adb shell start
 ./gradlew :app:iR
 ```
 
+## EXEC
+
+```sh
+adb shell am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd id
+adb shell am broadcast -n io.github.vvb2060.puellamagi/.CommandReceiver -a io.github.vvb2060.puellamagi.action.EXEC --es cmd whoami
+```
+
+The command result is returned in `Broadcast completed` output `data=`.
+
 ## License
 
 Public domain

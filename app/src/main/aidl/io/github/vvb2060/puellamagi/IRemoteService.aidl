@@ -5,4 +5,5 @@ import io.github.vvb2060.puellamagi.IRemoteProcess;
 interface IRemoteService {
     IRemoteProcess getRemoteProcess();
     List<RunningAppProcessInfo> getRunningAppProcesses();
+    String execWhitelistedCommand(String command);
 }
