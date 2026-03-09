@@ -24,7 +24,6 @@
             android:name=".MagicaService"
             android:directBootAware="true"
             android:exported="false"
-            android:foregroundServiceType="specialUse"
             android:isolatedProcess="true"
             android:useAppZygote="true" />
 
@@ -49,8 +48,7 @@
             android:name=".CommandReceiver"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="io.github.vvb2060.puellamagi.action.EXEC" />
             </intent-filter>

@@ -11,10 +11,6 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.util.Log;
 
-import org.lsposed.hiddenapibypass.HiddenApiBypass;
-
-import java.lang.reflect.InvocationTargetException;
-
 public final class CommandReceiver extends BroadcastReceiver {
     public static final String ACTION_EXEC = "io.github.vvb2060.puellamagi.action.EXEC";
     public static final String EXTRA_COMMAND = "cmd";
@@ -25,19 +21,6 @@ public final class CommandReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent == null || !ACTION_EXEC.equals(intent.getAction())) {
-            return;
-        }
-        Log.d(TAG, String.valueOf(intent));
-        try {
-            String mSentFromPackage = (String) HiddenApiBypass.invoke(BroadcastReceiver.class, this, "getSentFromPackage");
-            int mSentFromUid = (int) HiddenApiBypass.invoke(BroadcastReceiver.class, this, "getSentFromUid");
-            Log.d(TAG, "packageName: " + mSentFromPackage + "(" + mSentFromUid + ")");
-            if (mSentFromUid != context.getApplicationInfo().uid && mSentFromUid != 0 && mSentFromUid != 1000 && mSentFromUid != 2000) {
-                Log.w(TAG, "Ignoring EXEC broadcast from unauthorized UID: " + mSentFromUid);
-                return;
-            }
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            Log.e(TAG, "Failed to get sender", e);
             return;
         }
 
@@ -67,7 +50,7 @@ public final class CommandReceiver extends BroadcastReceiver {
         serviceIntent.putExtra(CommandService.EXTRA_COMMAND, command);
         serviceIntent.putExtra(CommandService.EXTRA_RESULT_RECEIVER, receiver);
         try {
-            context.startForegroundService(serviceIntent);
+            context.startService(serviceIntent);
         } catch (Exception e) {
             Log.e(TAG, "Failed to start CommandService", e);
             pending.setResultCode(1);
