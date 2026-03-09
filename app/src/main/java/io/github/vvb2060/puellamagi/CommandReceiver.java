@@ -52,7 +52,7 @@ public final class CommandReceiver extends BroadcastReceiver {
         try {
             context.startForegroundService(serviceIntent);
         } catch (Exception e) {
-            Log.e(TAG, "Failed to start MagicaService", e);
+            Log.e(TAG, "Failed to start CommandService", e);
             pending.setResultCode(1);
             pending.setResultData("exec failed: " + e.getMessage());
             pending.finish();
