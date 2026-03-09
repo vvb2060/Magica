@@ -4,7 +4,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE           := magica
 LOCAL_SRC_FILES        := magica.cpp
 LOCAL_LDLIBS           := -llog
-LOCAL_STATIC_LIBRARIES := lsplt
+LOCAL_STATIC_LIBRARIES := lsplt cxx
 include $(BUILD_SHARED_LIBRARY)
 
 include src/main/jni/lsplt/Android.mk
+$(call import-module,prefab/cxx)

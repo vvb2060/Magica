@@ -13,6 +13,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            vcsInfo.include false
             signingConfig signingConfigs.debug
             proguardFiles 'proguard-rules.pro'
         }
@@ -22,6 +23,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        prefab true
         aidl true
     }
     compileOptions {
@@ -44,4 +46,5 @@ android {
 dependencies {
     compileOnly projects.stub
     implementation 'com.github.topjohnwu.libsu:core:6.0.0'
+    implementation 'org.lsposed.libcxx:libcxx:29.0.14206865'
 }

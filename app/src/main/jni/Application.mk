@@ -3,4 +3,4 @@ APP_CFLAGS     := -Wall -Wextra -Werror -fvisibility=hidden -fvisibility-inlines
 APP_CFLAGS     += -flto
 APP_CONLYFLAGS := -std=c23
 APP_CPPFLAGS   := -std=c++23
-APP_STL        := c++_static
+APP_STL        := none
