@@ -23,7 +23,7 @@
         <service
             android:name=".MagicaService"
             android:directBootAware="true"
-            android:exported="true"
+            android:exported="false"
             android:isolatedProcess="true"
             android:useAppZygote="true">
         </service>
@@ -50,7 +50,8 @@
             android:name=".CommandReceiver"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.BRICK"> <!-- shell -->
             <intent-filter>
                 <action android:name="io.github.vvb2060.puellamagi.action.EXEC" />
             </intent-filter>

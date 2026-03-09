@@ -5,6 +5,7 @@ import static io.github.vvb2060.puellamagi.App.TAG;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,6 +24,15 @@ public final class CommandReceiver extends BroadcastReceiver {
         if (intent == null || !ACTION_EXEC.equals(intent.getAction())) {
             return;
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            var senderUid = getSentFromUid();
+            if (senderUid != context.getApplicationInfo().uid && senderUid != 0 && senderUid != 1000 && senderUid != 2000) {
+                Log.w(TAG, "Ignoring EXEC broadcast from unauthorized UID: " + senderUid);
+                return;
+            }
+        }
+
 
         var command = intent.getStringExtra(EXTRA_COMMAND);
 

@@ -7,7 +7,6 @@ android {
     defaultConfig {
         applicationId 'io.github.vvb2060.puellamagi'
         minSdkVersion 29
-        compileSdk 35
         versionCode 3
         versionName '1.2'
     }
