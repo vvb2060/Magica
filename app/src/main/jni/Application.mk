@@ -1,4 +1,6 @@
-APP_STL     := none
-APP_LDFLAGS := -Wl,-exclude-libs,ALL -Wl,--gc-sections -Wl,--strip-all
-APP_CFLAGS  := -fvisibility=hidden -fvisibility-inlines-hidden -fdata-sections -ffunction-sections
-APP_CFLAGS  += -Oz
+APP_LDFLAGS    := -Wl,-exclude-libs,ALL -Wl,--gc-sections -Wl,--strip-all -Wl,--icf=all -flto
+APP_CFLAGS     := -Wall -Wextra -Werror -fvisibility=hidden -fvisibility-inlines-hidden
+APP_CFLAGS     += -flto
+APP_CONLYFLAGS := -std=c23
+APP_CPPFLAGS   := -std=c++23
+APP_STL        := c++_static

@@ -6,6 +6,22 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <Button
+            android:id="@+id/install"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp"
+            android:text="@string/enable_adb_root"
+            android:visibility="gone" />
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
@@ -27,18 +43,4 @@
         </HorizontalScrollView>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp">
-
-        <Button
-            android:id="@+id/install"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:visibility="gone" />
-    </LinearLayout>
 </LinearLayout>
-

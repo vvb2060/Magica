@@ -3,15 +3,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion '32.0.0'
-    ndkVersion '23.1.7779620'
+    enableKotlin = false
+    namespace 'io.github.vvb2060.puellamagi'
     defaultConfig {
-        applicationId 'io.github.vvb2060.puellamagi'
-        minSdkVersion 29
-        targetSdkVersion 32
-        versionCode 2
-        versionName '1.1'
+        versionCode 3
+        versionName '2.0'
     }
     buildTypes {
         release {
@@ -26,20 +22,26 @@ android {
     }
     buildFeatures {
         viewBinding true
+        aidl true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += '**'
         }
     }
-    lintOptions {
+    lint {
         checkReleaseBuilds false
     }
     dependenciesInfo {
         includeInApk false
     }
+}
+
+dependencies {
+    compileOnly projects.stub
+    implementation 'com.github.topjohnwu.libsu:core:6.0.0'
 }
