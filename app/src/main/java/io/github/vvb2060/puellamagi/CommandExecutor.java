@@ -1,5 +1,7 @@
 package io.github.vvb2060.puellamagi;
 
+import android.util.Log;
+
 import io.github.vvb2060.magica.lib.MagicaRoot;
 
 import java.io.BufferedReader;
@@ -32,6 +34,7 @@ final class CommandExecutor {
         try {
             int code = process.waitFor();
             var output = stdout.isEmpty() ? stderr : stdout;
+            Log.d(App.TAG, output + " (exit=" + code + ")");
             if (output.isEmpty()) {
                 output = "<empty output>";
             }
