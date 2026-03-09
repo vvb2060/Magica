@@ -20,6 +20,9 @@ final class CommandExecutor {
 
     static String execute(String command) throws IOException {
         var normalized = normalize(command);
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("Command must not be empty");
+        }
 
         MagicaRoot.root();
         var process = Runtime.getRuntime().exec(new String[]{"sh", "-c", normalized});
