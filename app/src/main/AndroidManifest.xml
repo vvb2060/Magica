@@ -24,16 +24,15 @@
             android:name=".MagicaService"
             android:directBootAware="true"
             android:exported="false"
+            android:foregroundServiceType="specialUse"
             android:isolatedProcess="true"
-            android:useAppZygote="true">
-        </service>
+            android:useAppZygote="true" />
 
         <service
             android:name=".CommandService"
             android:directBootAware="true"
             android:exported="false"
-            android:foregroundServiceType="specialUse">
-        </service>
+            android:foregroundServiceType="specialUse" />
 
         <receiver
             android:name=".BootCompletedReceiver"
@@ -51,7 +50,7 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BRICK"> <!-- shell -->
+            >
             <intent-filter>
                 <action android:name="io.github.vvb2060.puellamagi.action.EXEC" />
             </intent-filter>

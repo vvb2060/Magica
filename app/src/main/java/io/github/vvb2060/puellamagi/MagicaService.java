@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public final class MagicaService extends Service {
+
     private final Object lock = new Object();
     private Process process;
     private final IRemoteService.Stub binder = new IRemoteService.Stub() {

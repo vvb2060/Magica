@@ -19,7 +19,7 @@ public final class BootCompletedReceiver extends BroadcastReceiver {
             return;
         }
         try {
-            context.startService(new Intent(context, MagicaService.class));
+            context.startForegroundService(new Intent(context, MagicaService.class));
             Log.i(TAG, "MagicaService started from boot action: " + action);
         } catch (RuntimeException e) {
             Log.e(TAG, "Failed to start MagicaService from boot action: " + action, e);

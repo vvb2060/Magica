@@ -5,12 +5,15 @@ import static io.github.vvb2060.puellamagi.App.TAG;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.util.Log;
+
+import org.lsposed.hiddenapibypass.HiddenApiBypass;
+
+import java.lang.reflect.InvocationTargetException;
 
 public final class CommandReceiver extends BroadcastReceiver {
     public static final String ACTION_EXEC = "io.github.vvb2060.puellamagi.action.EXEC";
@@ -24,15 +27,19 @@ public final class CommandReceiver extends BroadcastReceiver {
         if (intent == null || !ACTION_EXEC.equals(intent.getAction())) {
             return;
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            var senderUid = getSentFromUid();
-            if (senderUid != context.getApplicationInfo().uid && senderUid != 0 && senderUid != 1000 && senderUid != 2000) {
-                Log.w(TAG, "Ignoring EXEC broadcast from unauthorized UID: " + senderUid);
+        Log.d(TAG, String.valueOf(intent));
+        try {
+            String mSentFromPackage = (String) HiddenApiBypass.invoke(BroadcastReceiver.class, this, "getSentFromPackage");
+            int mSentFromUid = (int) HiddenApiBypass.invoke(BroadcastReceiver.class, this, "getSentFromUid");
+            Log.d(TAG, "packageName: " + mSentFromPackage + "(" + mSentFromUid + ")");
+            if (mSentFromUid != context.getApplicationInfo().uid && mSentFromUid != 0 && mSentFromUid != 1000 && mSentFromUid != 2000) {
+                Log.w(TAG, "Ignoring EXEC broadcast from unauthorized UID: " + mSentFromUid);
                 return;
             }
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to get sender", e);
+            return;
         }
-
 
         var command = intent.getStringExtra(EXTRA_COMMAND);
 

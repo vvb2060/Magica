@@ -7,6 +7,7 @@ android {
     defaultConfig {
         applicationId 'io.github.vvb2060.puellamagi'
         minSdkVersion 29
+        compileSdk 36
         versionCode 3
         versionName '1.2'
     }
@@ -44,4 +45,5 @@ android {
 
 dependencies {
     implementation project(':libmagica')
+    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:6.1")
 }
