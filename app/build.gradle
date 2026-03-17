@@ -6,8 +6,8 @@ android {
     enableKotlin = false
     namespace = "io.github.vvb2060.puellamagi"
     defaultConfig {
-        versionCode = 3
-        versionName = "2.0"
+        versionCode = 4
+        versionName = "2.1"
     }
     buildTypes {
         release {
