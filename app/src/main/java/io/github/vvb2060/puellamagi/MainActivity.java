@@ -7,13 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.os.SystemProperties;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowInsets;
@@ -21,7 +18,6 @@ import android.widget.ScrollView;
 
 import com.topjohnwu.superuser.CallbackList;
 import com.topjohnwu.superuser.Shell;
-import com.topjohnwu.superuser.ShellUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -109,53 +105,19 @@ public final class MainActivity extends Activity {
             return;
         }
 
-        checkAdbRoot();
+        binding.install.setVisibility(View.VISIBLE);
     }
 
-    void checkAdbRoot() {
-        var debuggable = SystemProperties.getBoolean("ro.debuggable", false);
-        var adbRoot = SystemProperties.getBoolean("service.adb.root", false);
-        if (debuggable && adbRoot) {
-            console.add(getString(R.string.adb_root_enabled));
-            binding.install.setVisibility(View.GONE);
-        } else if (debuggable) {
-            console.add(getString(R.string.adb_root_debuggable));
-            binding.install.setVisibility(View.GONE);
-        } else {
-            console.add(getString(R.string.adb_root_disabled));
-            binding.install.setVisibility(View.VISIBLE);
-            binding.install.setEnabled(true);
-        }
-    }
-
-    private void resetprop() {
-        ApplicationInfo info;
+    private void adbRoot() {
         try {
-            info = getPackageManager().getApplicationInfo("com.topjohnwu.magisk", 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            try {
-                info = getPackageManager().getApplicationInfo("io.github.vvb2060.magisk", 0);
-            } catch (PackageManager.NameNotFoundException ex) {
-                console.add(getString(R.string.magisk_package_not_installed));
-                console.add(getString(R.string.requires_latest_magisk_app));
-                return;
+            if (server.adbRoot()) {
+                console.add(getString(R.string.adb_root_enabled));
+            } else {
+                console.add(getString(R.string.adb_root_disabled));
             }
+        } catch (RemoteException e) {
+            console.add(Log.getStackTraceString(e));
         }
-
-        var magisk = info.nativeLibraryDir + "/libmagisk.so";
-        cmd("ln -fs " + magisk + " /dev/resetprop");
-        var context = ShellUtils.fastCmd(shell, "/dev/resetprop -Z ro.debuggable");
-        shell.newJob()
-                .add("chmod 0644 /dev/__properties__/properties_serial",
-                        "chmod 0644 /dev/__properties__/" + context,
-                        "/dev/resetprop -n ro.debuggable 1",
-                        "rm /dev/resetprop",
-                        "chmod 0444 /dev/__properties__/properties_serial",
-                        "chmod 0444 /dev/__properties__/" + context,
-                        "setprop service.adb.root 1",
-                        "setprop ctl.restart adbd")
-                .to(console, console)
-                .submit(out -> checkAdbRoot());
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,7 +133,7 @@ public final class MainActivity extends Activity {
         }
         binding.install.setOnClickListener(v -> {
             binding.install.setEnabled(false);
-            resetprop();
+            adbRoot();
         });
         setContentView(rootView);
         console.add(getString(R.string.start_service, Boolean.toString(bind())));

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <queries>
-        <package android:name="com.topjohnwu.magisk" />
-        <package android:name="io.github.vvb2060.magisk" />
-    </queries>
-
     <application
         android:icon="@android:drawable/sym_def_app_icon"
         android:label="Magica"

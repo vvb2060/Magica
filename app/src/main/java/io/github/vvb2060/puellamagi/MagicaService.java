@@ -24,9 +24,16 @@ public final class MagicaService extends Service {
         public List<ActivityManager.RunningAppProcessInfo> getRunningAppProcesses() {
             return getSystemService(ActivityManager.class).getRunningAppProcesses();
         }
+
+        @Override
+        public boolean adbRoot() {
+            return root() && adb_root();
+        }
     };
 
-    native static void root();
+    static native boolean root();
+
+    static native boolean adb_root();
 
     public IBinder onBind(Intent intent) {
         try {

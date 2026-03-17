@@ -6,10 +6,7 @@
     <string name="root_shell_opened">Root Shell opened</string>
     <string name="cannot_open_root_shell">Cannot open Root Shell</string>
     <string name="adb_root_enabled">adb root enabled</string>
-    <string name="adb_root_debuggable">adb root allowed</string>
-    <string name="adb_root_disabled">adb root disabled, need resetprop</string>
+    <string name="adb_root_disabled">adb root failed</string>
     <string name="enable_adb_root">enable adb root</string>
-    <string name="magisk_package_not_installed">Full version of Magisk (com.topjohnwu.magisk) is not installed</string>
-    <string name="requires_latest_magisk_app">Requires the latest version of Magisk</string>
     <string name="start_service">Start service: %s</string>
 </resources>

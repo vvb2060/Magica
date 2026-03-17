@@ -6,11 +6,8 @@
     <string name="root_shell_opened">已打开 Root Shell</string>
     <string name="cannot_open_root_shell">无法打开 Root Shell</string>
     <string name="adb_root_enabled">adb 已经提升到 Root</string>
-    <string name="adb_root_debuggable">adb Root 已经允许</string>
-    <string name="adb_root_disabled">adb Root 未允许，准备 resetprop</string>
+    <string name="adb_root_disabled">adb Root 失败</string>
     <string name="enable_adb_root">启用 adb Root</string>
-    <string name="magisk_package_not_installed">没有安装完整版 Magisk 软件包 (com.topjohnwu.magisk)</string>
-    <string name="requires_latest_magisk_app">需要安装最新 Magisk 应用</string>
     <string name="start_service">启动服务：%s</string>
 
 </resources>
