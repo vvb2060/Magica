@@ -54,28 +54,27 @@ jint JNI_OnLoad(JavaVM *jvm, void *v __unused) {
 
     signal(SIGSYS, signal_handler);
 
-    auto maps = lsplt::MapInfo::Scan();
-    bool hook_registered = false;
-    for (const auto &map: maps) {
-        if (map.path.ends_with("/libandroid_runtime.so")) {
-            LOGV("Found: dev=%lu, inode=%lu, path=%s",
-                 (unsigned long) map.dev, (unsigned long) map.inode, map.path.c_str());
-            if (lsplt::RegisterHook(map.dev, map.inode, "capset", (void *) skip_capset, nullptr)) {
-                hook_registered = true;
-                LOGD("Hook registered for capset");
-                break;
-            } else {
-                LOGE("Failed to register hook for capset");
-            }
-        }
-    }
+#if defined(__LP64__)
+    const char *runtime_path = "/system/lib64/libandroid_runtime.so";
+#else
+    const char *runtime_path = "/system/lib/libandroid_runtime.so";
+#endif
 
-    if (hook_registered) {
-        if (!lsplt::CommitHook()) {
-            PLOGE("lsplt CommitHook failed");
-        }
+    struct stat st{};
+    if (stat(runtime_path, &st) != 0) {
+        PLOGE("stat %s", runtime_path);
     } else {
-        LOGE("libandroid_runtime.so not found or hook registration failed");
+        LOGV("stat: dev=%lu, inode=%lu, path=%s",
+             (unsigned long) st.st_dev, (unsigned long) st.st_ino, runtime_path);
+        if (lsplt::RegisterHook(st.st_dev, st.st_ino, "capset", (void *) skip_capset, nullptr)) {
+            if (!lsplt::CommitHook()) {
+                PLOGE("CommitHook failed");
+            } else {
+                LOGD("CommitHook success");
+            }
+        } else {
+            PLOGE("Failed to register hook");
+        }
     }
 
     return JNI_VERSION_1_6;
