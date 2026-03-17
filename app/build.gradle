@@ -1,50 +1,50 @@
 plugins {
-    id 'com.android.application'
+    id("com.android.application")
 }
 
 android {
     enableKotlin = false
-    namespace 'io.github.vvb2060.puellamagi'
+    namespace = "io.github.vvb2060.puellamagi"
     defaultConfig {
-        versionCode 3
-        versionName '2.0'
+        versionCode = 3
+        versionName = "2.0"
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            vcsInfo.include false
-            signingConfig signingConfigs.debug
-            proguardFiles 'proguard-rules.pro'
+            minifyEnabled = true
+            shrinkResources = true
+            vcsInfo.include = false
+            signingConfig = signingConfigs["debug"]
+            proguardFiles("proguard-rules.pro")
         }
     }
     externalNativeBuild {
-        ndkBuild.path 'src/main/jni/Android.mk'
+        ndkBuild.path("src/main/jni/Android.mk")
     }
     buildFeatures {
-        viewBinding true
-        prefab true
-        aidl true
+        viewBinding = true
+        prefab = true
+        aidl = true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     packaging {
         resources {
-            excludes += '**'
+            excludes += "**"
         }
     }
     lint {
-        checkReleaseBuilds false
+        checkReleaseBuilds = false
     }
     dependenciesInfo {
-        includeInApk false
+        includeInApk = false
     }
 }
 
 dependencies {
-    compileOnly projects.stub
-    implementation 'com.github.topjohnwu.libsu:core:6.0.0'
-    implementation 'org.lsposed.libcxx:libcxx:29.0.14206865'
+    compileOnly(projects.stub)
+    implementation("com.github.topjohnwu.libsu:core:6.0.0")
+    implementation("org.lsposed.libcxx:libcxx:29.0.14206865")
 }
